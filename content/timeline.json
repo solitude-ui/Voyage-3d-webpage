@@ -1,0 +1,53 @@
+[
+  {
+    "id": "start",
+    "progress": 0.0,
+    "title": "Ignition Point",
+    "description": "Ready to accelerate. Scroll or use the arrow keys to drive through my journey.",
+    "mediaType": "none"
+  },
+  {
+    "id": "started-unity",
+    "progress": 0.2,
+    "title": "Unity Development",
+    "description": "Fell in love with gameplay programming. Built custom physics controllers, vehicle dynamics, and procedural audio systems.",
+    "mediaType": "image",
+    "mediaUrl": "/journey/images/unity-start.jpg",
+    "tags": ["Unity", "C#", "3D Physics"]
+  },
+  {
+    "id": "traffic-system",
+    "progress": 0.4,
+    "title": "AI Traffic Controller",
+    "description": "Engineered a scalable multi-threaded AI traffic system. Features lane-changing logic, obstruction avoidance, and grid pathfinding.",
+    "mediaType": "video",
+    "mediaUrl": "/journey/videos/traffic-demo.mp4",
+    "tags": ["AI", "Pathfinding", "Jobs System"]
+  },
+  {
+    "id": "graphics-upgrade",
+    "progress": 0.6,
+    "title": "URP & Custom HLSL",
+    "description": "Integrated Unity's Universal Render Pipeline. Crafted custom vehicle paint shaders (metallic, flake, clear coat) and environmental rain effects.",
+    "mediaType": "image",
+    "mediaUrl": "/journey/images/graphics-demo.jpg",
+    "tags": ["URP", "HLSL", "Shaders"]
+  },
+  {
+    "id": "multiplayer-update",
+    "progress": 0.8,
+    "title": "Realtime Multiplayer",
+    "description": "Developed server-authoritative multiplayer using Photon Fusion. Built prediction buffers for lag compensation and physics sync.",
+    "mediaType": "image",
+    "mediaUrl": "/journey/images/multiplayer-demo.jpg",
+    "tags": ["Photon Fusion", "Prediction", "WebSockets"]
+  },
+  {
+    "id": "webgl-export",
+    "progress": 1.0,
+    "title": "WebGL Racing Engine",
+    "description": "Successfully compiled, optimized, and deployed the racing engine to WebAssembly. Time to test drive the simulation!",
+    "mediaType": "unity",
+    "tags": ["WebGL", "WebAssembly", "Optimization"]
+  }
+]

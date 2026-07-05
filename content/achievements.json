@@ -1,0 +1,22 @@
+[
+  {
+    "id": "first-drive",
+    "title": "First Drive",
+    "description": "Ignite the engine and scroll past the starting checkpoint."
+  },
+  {
+    "id": "halfway",
+    "title": "Road Warrior",
+    "description": "Drive past 50% of the timeline checkpoints."
+  },
+  {
+    "id": "speed-demon",
+    "title": "Speed Demon",
+    "description": "Reach maximum scroll acceleration."
+  },
+  {
+    "id": "game-unlocked",
+    "title": "Test Driver",
+    "description": "Unlock and play the Unity WebGL racing demo."
+  }
+]

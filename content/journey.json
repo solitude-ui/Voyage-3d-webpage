@@ -1,0 +1,16 @@
+[
+  {
+    "id": "cert-unity",
+    "title": "Unity Certified Expert Gameplay Programmer",
+    "issuer": "Unity Technologies",
+    "date": "2024",
+    "link": "https://unity.com"
+  },
+  {
+    "id": "cert-graphics",
+    "title": "Interactive 3D Graphics Specialization",
+    "issuer": "Three.js Journey",
+    "date": "2025",
+    "link": "https://threejs-journey.com"
+  }
+]

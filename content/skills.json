@@ -1,0 +1,10 @@
+[
+  { "name": "Unity Engine & C#", "level": 95, "category": "Engine" },
+  { "name": "Vehicle Physics & Dynamics", "level": 90, "category": "Core" },
+  { "name": "WebGL / WebAssembly", "level": 85, "category": "Core" },
+  { "name": "Three.js / R3F", "level": 85, "category": "Web" },
+  { "name": "Next.js / TypeScript", "level": 80, "category": "Web" },
+  { "name": "HLSL Shaders / Custom VFX", "level": 80, "category": "Shaders" },
+  { "name": "Photon Fusion Multiplayer", "level": 75, "category": "Core" },
+  { "name": "Blender 3D Modeling", "level": 70, "category": "Tools" }
+]
