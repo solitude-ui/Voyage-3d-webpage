@@ -50,43 +50,43 @@ export default function InfoPanel() {
   }, [layout]);
 
   return (
-    <div className={`absolute inset-0 w-full h-full pointer-events-none z-20 flex items-start pt-36 md:items-center md:pt-0 select-none font-sans ${justifyClass}`}>
+    <div className={`absolute inset-0 w-full h-full pointer-events-none z-20 flex items-start pt-12 md:items-center md:pt-0 select-none font-sans ${justifyClass}`}>
       <AnimatePresence mode="wait">
         {activeCheckpoint && (
           <motion.div
             key={activeCheckpoint.id + '-' + layout}
             {...animationProps}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="w-full max-w-sm flex gap-6 items-start text-[#023B22] pointer-events-auto"
+            className="w-full max-w-sm flex gap-4 md:gap-6 items-start text-[#023B22] pointer-events-auto"
           >
             {/* Left side timeline indicator */}
-            <div className="flex flex-col items-center h-48">
-              <div className="w-2.5 h-2.5 rounded-full border-2 border-[#023B22] bg-white" />
+            <div className="flex flex-col items-center h-28 md:h-48">
+              <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-full border border-2 border-[#023B22] bg-white" />
               <div className="w-0.5 bg-[#023B22]/20 flex-1 my-1" />
-              <div className="text-[9px] font-mono tracking-widest text-[#023B22]/50 rotate-90 origin-left translate-y-3">
+              <div className="text-[7.5px] md:text-[9px] font-mono tracking-widest text-[#023B22]/50 rotate-90 origin-left translate-y-3">
                 {Math.round(activeCheckpoint.progress * 100)}%
               </div>
             </div>
 
             {/* Main Text details */}
-            <div className="flex flex-col gap-3 max-w-xs pr-4">
+            <div className="flex flex-col gap-1.5 md:gap-3 max-w-xs pr-4">
               <h2 
-                className="text-2xl md:text-3xl font-light tracking-wide capitalize"
+                className="text-base md:text-3xl font-light tracking-wide capitalize"
                 style={{ fontFamily: 'Georgia, serif' }}
               >
                 {activeCheckpoint.title}
               </h2>
               
-              <p className="text-xs md:text-sm leading-relaxed font-light text-[#023B22]/85">
+              <p className="text-[10px] md:text-sm leading-relaxed font-light text-[#023B22]/85">
                 {activeCheckpoint.description}
               </p>
 
               {activeCheckpoint.tags && (
-                <div className="flex flex-wrap gap-1.5 mt-2">
+                <div className="flex flex-wrap gap-1 md:gap-1.5 mt-1 md:mt-2">
                   {activeCheckpoint.tags.map((tag) => (
                     <span 
                       key={tag} 
-                      className="text-[9px] uppercase tracking-wider px-2 py-0.5 border border-[#023B22]/15 bg-white/50 rounded font-mono"
+                      className="text-[7.5px] md:text-[9px] uppercase tracking-wider px-1.5 py-0.5 border border-[#023B22]/15 bg-white/50 rounded font-mono"
                     >
                       {tag}
                     </span>
