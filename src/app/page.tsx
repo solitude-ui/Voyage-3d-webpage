@@ -48,7 +48,9 @@ export default function Home() {
       {/* 3. Authentication & Gameplay Modals (z-40/z-50) */}
       <FTUX />
       <UnityModal />
-      <Feedback active={feedbackOpen} onSubmittedComplete={() => setFeedbackOpen(false)} />
+      {feedbackOpen && (
+        <Feedback active={feedbackOpen} onSubmittedComplete={() => setFeedbackOpen(false)} />
+      )}
 
       {/* 4. Cinematic Warp Loop Transition Screen */}
       <AnimatePresence>

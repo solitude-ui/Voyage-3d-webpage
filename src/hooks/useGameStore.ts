@@ -115,7 +115,7 @@ export const useGameStore = create<GameState>((set) => ({
     unityStats: { ...state.unityStats, ...stats }
   })),
   setFeedbackSubmitted: (feedbackSubmitted) => {
-    localStorage.setItem('voyage_feedback_submitted', 'true');
+    localStorage.setItem('voyage_feedback_submitted', feedbackSubmitted ? 'true' : 'false');
     set({ feedbackSubmitted });
   },
   setFeedbackOpen: (feedbackOpen) => set({ feedbackOpen }),

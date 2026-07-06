@@ -45,7 +45,8 @@ export default function Dashboard() {
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
-      useGameStore.setState({ profile: null, loginSubmitted: false });
+      useGameStore.setState({ profile: null, loginSubmitted: false, feedbackSubmitted: false });
+      localStorage.removeItem('voyage_feedback_submitted');
     } catch (e) {
       console.error('Logout failed:', e);
     }
