@@ -109,30 +109,30 @@ export default function FTUX() {
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.95, y: 30, opacity: 0 }}
             transition={{ type: 'spring', damping: 20 }}
-            className="w-full max-w-md bg-[#E2ECF5]/95 border border-white/30 p-8 rounded-lg shadow-2xl relative text-[#023B22]"
+            className="w-full max-w-md bg-[#E2ECF5]/95 border border-white/30 p-5 md:p-8 rounded-lg shadow-2xl relative text-[#023B22] max-h-[90vh] overflow-y-auto scrollbar-thin pr-3"
           >
             {/* Title */}
-            <div className="flex items-center gap-2 border-b border-[#023B22]/10 pb-4 mb-6">
-              <Terminal className="w-5 h-5 text-[#023B22] animate-pulse" />
-              <h2 className="text-sm font-black tracking-widest uppercase" style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="flex items-center gap-1.5 border-b border-[#023B22]/10 pb-2 mb-3 lg:pb-4 lg:mb-6">
+              <Terminal className="w-4 h-4 lg:w-5 lg:h-5 text-[#023B22] animate-pulse" />
+              <h2 className="text-xs lg:text-sm font-black tracking-widest uppercase" style={{ fontFamily: 'Georgia, serif' }}>
                 {isRegisterMode ? 'CREATE PILOT ACCOUNT' : 'LOGIN FOR TELEMETRY'}
               </h2>
             </div>
 
-            <p className="text-[11px] text-[#023B22]/70 mb-6 leading-relaxed uppercase tracking-wider">
+            <p className="text-[8px] lg:text-[11px] text-[#023B22]/70 mb-3 lg:mb-6 leading-relaxed uppercase tracking-wider">
               {isRegisterMode 
                 ? 'Register your custom credentials. Credentials will be securely stored in the database.'
                 : 'Authenticate your pilot credentials. This will synchronize the simulator compile sequence in the background.'
               }
             </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-xs">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2 lg:gap-4 text-xs">
               
               {/* Username Input */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[9px] text-[#023B22] font-bold tracking-widest uppercase">USERNAME</label>
+              <div className="flex flex-col gap-1">
+                <label className="text-[7.5px] lg:text-[9px] text-[#023B22] font-bold tracking-widest uppercase">USERNAME</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#023B22]/40" />
+                  <User className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 lg:w-4 lg:h-4 text-[#023B22]/40" />
                   <input
                     type="text"
                     required
@@ -140,16 +140,16 @@ export default function FTUX() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Enter username..."
-                    className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-3 pl-10 pr-4 text-[#023B22] placeholder-[#023B22]/30 font-bold"
+                    className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-1.5 lg:py-2.5 pl-8 lg:pl-10 pr-3 lg:pr-4 text-[9px] lg:text-xs text-[#023B22] placeholder-[#023B22]/30 font-bold"
                   />
                 </div>
               </div>
 
               {/* Password Input */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[9px] text-[#023B22] font-bold tracking-widest uppercase">PASSWORD</label>
+              <div className="flex flex-col gap-1">
+                <label className="text-[7.5px] lg:text-[9px] text-[#023B22] font-bold tracking-widest uppercase">PASSWORD</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#023B22]/40" />
+                  <Lock className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 lg:w-4 lg:h-4 text-[#023B22]/40" />
                   <input
                     type="password"
                     required
@@ -157,15 +157,15 @@ export default function FTUX() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter password..."
-                    className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-3 pl-10 pr-4 text-[#023B22] placeholder-[#023B22]/30 font-bold"
+                    className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-1.5 lg:py-2.5 pl-8 lg:pl-10 pr-3 lg:pr-4 text-[9px] lg:text-xs text-[#023B22] placeholder-[#023B22]/30 font-bold"
                   />
                 </div>
               </div>
 
               {/* Error messages */}
               {errorMsg && (
-                <div className="flex items-center gap-1.5 text-[10px] text-red-600 font-bold uppercase mt-1">
-                  <ShieldAlert className="w-4 h-4" />
+                <div className="flex items-center gap-1 text-[9px] lg:text-[10px] text-red-600 font-bold uppercase mt-1">
+                  <ShieldAlert className="w-3.5 h-3.5" />
                   <span>{errorMsg}</span>
                 </div>
               )}
@@ -174,10 +174,10 @@ export default function FTUX() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="mt-4 flex items-center justify-center gap-2 w-full py-4 bg-[#023B22] hover:bg-[#034d2d] text-white font-bold uppercase tracking-widest rounded shadow-md hover:scale-[1.01] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                className="mt-2 flex items-center justify-center gap-2 w-full py-2.5 lg:py-3.5 bg-[#023B22] hover:bg-[#034d2d] text-white font-bold uppercase tracking-widest text-[9px] lg:text-xs rounded shadow-md hover:scale-[1.01] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
               >
                 <span>{isLoading ? 'Processing...' : isRegisterMode ? 'Register Account' : 'Authenticate & Compile'}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
 
               {/* Toggle Register Mode */}
@@ -188,7 +188,7 @@ export default function FTUX() {
                   setIsRegisterMode(!isRegisterMode);
                   setErrorMsg('');
                 }}
-                className="text-[9px] text-center text-[#023B22]/60 hover:text-[#023B22] uppercase tracking-wider font-bold mt-2 hover:underline cursor-pointer"
+                className="text-[8px] lg:text-[9px] text-center text-[#023B22]/60 hover:text-[#023B22] uppercase tracking-wider font-bold mt-1 hover:underline cursor-pointer"
               >
                 {isRegisterMode ? 'Already have credentials? Login' : 'First time? Create pilot account'}
               </button>

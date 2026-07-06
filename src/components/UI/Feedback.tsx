@@ -75,7 +75,7 @@ export default function Feedback({
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-4 font-mono select-none"
         >
-          <div className="w-full max-w-md bg-[#E2ECF5]/95 border border-[#023B22]/20 p-6 rounded-lg shadow-2xl relative text-[#023B22]">
+          <div className="w-full max-w-md bg-[#E2ECF5]/95 border border-[#023B22]/20 p-5 md:p-6 rounded-lg shadow-2xl relative text-[#023B22] max-h-[90vh] overflow-y-auto scrollbar-thin pr-3">
             
             <AnimatePresence mode="wait">
               {!submitted ? (
@@ -87,28 +87,28 @@ export default function Feedback({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  <div className="border-b border-[#023B22]/10 pb-3">
-                    <h3 className="text-sm font-bold uppercase tracking-wider" style={{ fontFamily: 'Georgia, serif' }}>
+                  <div className="border-b border-[#023B22]/10 pb-2 mb-2 lg:pb-3 lg:mb-4">
+                    <h3 className="text-xs lg:text-sm font-bold uppercase tracking-wider" style={{ fontFamily: 'Georgia, serif' }}>
                       MANDATORY PILOT REVIEW
                     </h3>
-                    <p className="text-[9px] uppercase tracking-widest text-[#023B22]/60 mt-1">
+                    <p className="text-[7px] lg:text-[9px] uppercase tracking-widest text-[#023B22]/60 mt-0.5">
                       File simulation telemetry review to close virtual cockpit connection
                     </p>
                   </div>
 
                   {/* Star Rating */}
-                  <div className="flex flex-col items-center gap-1.5 py-1">
-                    <label className="text-[8px] text-[#023B22]/60 tracking-wider">OVERALL SIMULATOR RATING</label>
-                    <div className="flex gap-2">
+                  <div className="flex flex-col items-center gap-1.5 py-0.5">
+                    <label className="text-[7px] lg:text-[8px] text-[#023B22]/60 tracking-wider">OVERALL SIMULATOR RATING</label>
+                    <div className="flex gap-1.5">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
                           type="button"
                           key={star}
                           onClick={() => setRating(star)}
-                          className="p-1 hover:scale-110 active:scale-95 transition-transform"
+                          className="p-0.5 hover:scale-110 active:scale-95 transition-transform"
                         >
                           <Star
-                            className={`w-8 h-8 transition-all ${
+                            className={`w-6 h-6 lg:w-8 lg:h-8 transition-all ${
                               star <= rating 
                                 ? 'fill-yellow-500 stroke-yellow-500 drop-shadow-sm' 
                                 : 'stroke-[#023B22]/30 fill-transparent'
@@ -121,7 +121,7 @@ export default function Feedback({
 
                   {/* Question 1: Experience */}
                   <div className="flex flex-col gap-1">
-                    <label className="text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
+                    <label className="text-[7.5px] lg:text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
                       1. HOW IS THE EXPERIENCE?
                     </label>
                     <input
@@ -130,13 +130,13 @@ export default function Feedback({
                       value={favoriteFeature}
                       onChange={(e) => setFavoriteFeature(e.target.value)}
                       placeholder="Describe your gameplay experience..."
-                      className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-2 px-3 placeholder-[#023B22]/20 font-bold"
+                      className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-1.5 lg:py-2 px-2.5 lg:px-3 text-[9px] lg:text-xs placeholder-[#023B22]/20 font-bold"
                     />
                   </div>
 
                   {/* Question 2: Negatives */}
                   <div className="flex flex-col gap-1">
-                    <label className="text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
+                    <label className="text-[7.5px] lg:text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
                       2. WHAT ARE THE NEGATIVES?
                     </label>
                     <input
@@ -145,13 +145,13 @@ export default function Feedback({
                       value={bugReport}
                       onChange={(e) => setBugReport(e.target.value)}
                       placeholder="List any bugs, issues, or negatives..."
-                      className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-2 px-3 placeholder-[#023B22]/20 font-bold"
+                      className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-1.5 lg:py-2 px-2.5 lg:px-3 text-[9px] lg:text-xs placeholder-[#023B22]/20 font-bold"
                     />
                   </div>
 
                   {/* Question 3: Improvements */}
                   <div className="flex flex-col gap-1">
-                    <label className="text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
+                    <label className="text-[7.5px] lg:text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
                       3. GIVE IDEA ABOUT IMPROVEMENTS
                     </label>
                     <textarea
@@ -160,7 +160,7 @@ export default function Feedback({
                       value={suggestions}
                       onChange={(e) => setSuggestions(e.target.value)}
                       placeholder="Suggestions to improve the game..."
-                      className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-2 px-3 placeholder-[#023B22]/20 font-bold resize-none font-sans"
+                      className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-1.5 lg:py-2 px-2.5 lg:px-3 text-[9px] lg:text-xs placeholder-[#023B22]/20 font-bold resize-none font-sans"
                     />
                   </div>
 
@@ -176,7 +176,7 @@ export default function Feedback({
                   <button
                     type="submit"
                     disabled={loading}
-                    className="mt-2 flex items-center justify-center gap-2 py-3.5 bg-[#023B22] hover:bg-[#034d2d] text-white font-bold uppercase tracking-widest rounded shadow-md transition-all cursor-pointer disabled:opacity-50"
+                    className="mt-2 flex items-center justify-center gap-2 py-2.5 lg:py-3.5 bg-[#023B22] hover:bg-[#034d2d] text-white font-bold uppercase tracking-widest text-[9px] lg:text-xs rounded shadow-md transition-all cursor-pointer disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
                     <span>{loading ? 'TRANSMITTING...' : 'SUBMIT REVIEW'}</span>
