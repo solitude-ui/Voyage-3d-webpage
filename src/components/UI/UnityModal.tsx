@@ -102,6 +102,12 @@ export default function UnityModal() {
         setLoadingPercent(0);
         setUnityReady(false);
         resetGame();
+        
+        // Trigger feedback modal if not submitted yet
+        const state = useGameStore.getState();
+        if (!state.feedbackSubmitted) {
+          state.setFeedbackOpen(true);
+        }
         return;
       }
 
@@ -215,6 +221,12 @@ export default function UnityModal() {
     setLoadingPercent(0);
     setUnityReady(false);
     resetGame();
+    
+    // Trigger feedback modal if not submitted yet
+    const state = useGameStore.getState();
+    if (!state.feedbackSubmitted) {
+      state.setFeedbackOpen(true);
+    }
   };
 
   const handleEndSimulation = () => {
@@ -223,6 +235,12 @@ export default function UnityModal() {
     setLoadingPercent(0);
     setUnityReady(false);
     resetGame();
+    
+    // Trigger feedback modal if not submitted yet
+    const state = useGameStore.getState();
+    if (!state.feedbackSubmitted) {
+      state.setFeedbackOpen(true);
+    }
   };
 
   const visible = unityPlaying && loginSubmitted;

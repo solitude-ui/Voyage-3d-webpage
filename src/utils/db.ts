@@ -134,3 +134,18 @@ export async function getAllFeedback() {
     }).reverse();
   }
 }
+
+// Check if a user has already submitted feedback
+export async function hasUserSubmittedFeedback(userId: number): Promise<boolean> {
+  if (isDbConfigured()) {
+    try {
+      const { rows } = await sql`SELECT 1 FROM feedback WHERE user_id = ${userId} LIMIT 1`;
+      return rows.length > 0;
+    } catch {
+      return false;
+    }
+  } else {
+    const feedback = readLocalFile(FEEDBACK_JSON_PATH);
+    return feedback.some((fb) => fb.user_id === userId);
+  }
+}

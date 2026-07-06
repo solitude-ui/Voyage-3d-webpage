@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { queryUserByUsername } from '../../../../utils/db';
+import { queryUserByUsername, hasUserSubmittedFeedback } from '../../../../utils/db';
 import { setSession } from '../../../../utils/auth';
 
 export async function POST(request: Request) {
@@ -29,11 +29,14 @@ export async function POST(request: Request) {
       username: user.username,
     });
 
+    const feedbackSubmitted = await hasUserSubmittedFeedback(user.id);
+
     return NextResponse.json({
       success: true,
       user: {
         id: user.id,
         username: user.username,
+        feedbackSubmitted
       },
     });
   } catch (e: any) {

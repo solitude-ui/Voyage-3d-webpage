@@ -10,7 +10,8 @@ export default function FTUX() {
     unityPlaying, 
     loginSubmitted, 
     setProfile, 
-    setUnityLoading 
+    setUnityLoading,
+    setFeedbackSubmitted
   } = useGameStore();
 
   const [username, setUsername] = useState('');
@@ -29,10 +30,11 @@ export default function FTUX() {
             name: data.user.username,
             email: `${data.user.username}@voyage.com`, // Maintain profile shape compatibility
           });
+          setFeedbackSubmitted(data.user.feedbackSubmitted);
         }
       })
       .catch((e) => console.error('Session check failed:', e));
-  }, [setProfile]);
+  }, [setProfile, setFeedbackSubmitted]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,6 +81,7 @@ export default function FTUX() {
         name: data.user.username,
         email: `${data.user.username}@voyage.com`,
       });
+      setFeedbackSubmitted(data.user.feedbackSubmitted);
 
       // Start WebGL game loading sequence
       setUnityLoading(true);

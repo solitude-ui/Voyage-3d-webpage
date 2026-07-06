@@ -40,6 +40,7 @@ interface GameState {
   
   // Feedback (Compulsory, one-time)
   feedbackSubmitted: boolean;
+  feedbackOpen: boolean;
   
   // Actions
   setProfile: (profile: UserProfile) => void;
@@ -57,6 +58,7 @@ interface GameState {
   setUnityPlaying: (playing: boolean) => void;
   setUnityStats: (stats: Partial<GameStats>) => void;
   setFeedbackSubmitted: (submitted: boolean) => void;
+  setFeedbackOpen: (open: boolean) => void;
   setSelectedCar: (car: 'suv' | 'challenger' | 'block') => void;
   resetGame: () => void;
 }
@@ -87,6 +89,7 @@ export const useGameStore = create<GameState>((set) => ({
   },
   
   feedbackSubmitted: false,
+  feedbackOpen: false,
 
   setProfile: (profile) => {
     localStorage.setItem('voyage_profile', JSON.stringify(profile));
@@ -115,6 +118,7 @@ export const useGameStore = create<GameState>((set) => ({
     localStorage.setItem('voyage_feedback_submitted', 'true');
     set({ feedbackSubmitted });
   },
+  setFeedbackOpen: (feedbackOpen) => set({ feedbackOpen }),
   
   resetGame: () => set({
     scrollProgress: 0,

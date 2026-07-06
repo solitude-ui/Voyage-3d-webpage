@@ -22,6 +22,7 @@ import Dashboard from '../components/UI/Dashboard';
 import InfoPanel from '../components/UI/InfoPanel';
 import FTUX from '../components/UI/FTUX';
 import UnityModal from '../components/UI/UnityModal';
+import Feedback from '../components/UI/Feedback';
 
 export default function Home() {
   // Mount smooth scrolling physics calculations
@@ -29,6 +30,8 @@ export default function Home() {
 
   const fadeActive = useGameStore((state) => state.fadeActive);
   const unityPlaying = useGameStore((state) => state.unityPlaying);
+  const feedbackOpen = useGameStore((state) => state.feedbackOpen);
+  const setFeedbackOpen = useGameStore((state) => state.setFeedbackOpen);
 
   return (
     <div className="relative w-screen h-[100dvh] overflow-hidden select-none bg-[#CADAE8]">
@@ -45,6 +48,7 @@ export default function Home() {
       {/* 3. Authentication & Gameplay Modals (z-40/z-50) */}
       <FTUX />
       <UnityModal />
+      <Feedback active={feedbackOpen} onSubmittedComplete={() => setFeedbackOpen(false)} />
 
       {/* 4. Cinematic Warp Loop Transition Screen */}
       <AnimatePresence>

@@ -39,6 +39,7 @@ export async function POST(request: Request) {
       user: {
         id: user.id,
         username: user.username,
+        feedbackSubmitted: false, // newly registered user has no reviews yet
       },
     });
   } catch (e: any) {
