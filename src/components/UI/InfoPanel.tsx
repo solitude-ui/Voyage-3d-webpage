@@ -35,28 +35,22 @@ export default function InfoPanel() {
 
   // Align flex items based on layout
   const justifyClass = useMemo(() => {
-    if (layout === 'left') return 'justify-start px-12 md:px-24';
-    return 'justify-end px-12 md:px-24';
+    if (layout === 'left') return 'justify-center md:justify-start px-6 md:px-24';
+    return 'justify-center md:justify-end px-6 md:px-24';
   }, [layout]);
 
   // Framer Motion animation values based on layout
   const animationProps = useMemo(() => {
-    if (layout === 'left') {
-      return {
-        initial: { x: -80, opacity: 0 },
-        animate: { x: 0, opacity: 1 },
-        exit: { x: -80, opacity: 0 },
-      };
-    }
+    // On mobile, fade and slide up (y) instead of side sliding (x) to prevent clipping
     return {
-      initial: { x: 80, opacity: 0 },
-      animate: { x: 0, opacity: 1 },
-      exit: { x: 80, opacity: 0 },
+      initial: { y: 20, opacity: 0 },
+      animate: { y: 0, opacity: 1 },
+      exit: { y: -20, opacity: 0 },
     };
   }, [layout]);
 
   return (
-    <div className={`absolute inset-0 w-full h-full pointer-events-none z-20 flex items-center select-none font-sans ${justifyClass}`}>
+    <div className={`absolute inset-0 w-full h-full pointer-events-none z-20 flex items-start pt-36 md:items-center md:pt-0 select-none font-sans ${justifyClass}`}>
       <AnimatePresence mode="wait">
         {activeCheckpoint && (
           <motion.div

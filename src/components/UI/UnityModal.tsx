@@ -26,12 +26,13 @@ const parseUnityScore = (data: unknown) => {
   }
 
   if (typeof data === 'string') {
-    if (data === 'unity-loaded') return null;
+    if (data === 'unity-loaded' || data === 'exit-unity') return null;
 
     const numericScore = toFiniteScore(data);
     if (numericScore !== null) return numericScore;
 
-    const scoreMatch = data.match(/(?:score|currentScore|gameScore)\s*[:=]\s*(\d+)/i);
+    // Match patterns like "Score: 123", "totalScore=123", "value: 123"
+    const scoreMatch = data.match(/(?:score|currentScore|gameScore|totalScore|value|total_score|current_score)\s*[:=]\s*(\d+)/i);
     if (scoreMatch) return toFiniteScore(scoreMatch[1]);
 
     try {
@@ -43,13 +44,11 @@ const parseUnityScore = (data: unknown) => {
 
   if (!data || typeof data !== 'object') return null;
 
-  const payload = data as UnityBridgePayload;
-  const bridgeEvent = String(payload.type ?? payload.event ?? payload.name ?? '').toLowerCase();
-  const scoreValue = payload.score ?? payload.currentScore ?? payload.gameScore ?? payload.value;
+  // For object payloads, check all common score keys directly
+  const payload = data as any;
+  const scoreValue = payload.score ?? payload.currentScore ?? payload.gameScore ?? payload.totalScore ?? payload.value ?? payload.total_score ?? payload.current_score;
 
-  if (scoreValue === undefined) return null;
-
-  if (!bridgeEvent || bridgeEvent.includes('score') || bridgeEvent.includes('unity')) {
+  if (scoreValue !== undefined && scoreValue !== null) {
     return toFiniteScore(scoreValue);
   }
 
@@ -70,17 +69,39 @@ export default function UnityModal() {
   const [loadingPercent, setLoadingPercent] = useState(0);
   const [factsIndex, setFactsIndex] = useState(0);
   const [unityReady, setUnityReady] = useState(false);
+  const [iframeSrc, setIframeSrc] = useState('/unity-game/index.html');
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // Detect mobile and choose corresponding WebGL build on play start
+  useEffect(() => {
+    if (unityPlaying && typeof window !== 'undefined') {
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+      setIframeSrc(isMobile ? '/unity-game-mobile/index.html' : '/unity-game/index.html');
+    }
+  }, [unityPlaying]);
 
   // Listen for load and score messages from inside the WebGL iframe
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
+      console.log("UnityModal Received Message:", event.data);
+      // Relaxed source validation to support sandboxed fullscreen contexts where event.source can be null
+      /*
       if (iframeRef.current?.contentWindow && event.source !== iframeRef.current.contentWindow) {
         return;
       }
+      */
 
       if (event.data === 'unity-loaded') {
         setUnityReady(true);
+        return;
+      }
+
+      if (event.data === 'exit-unity') {
+        setUnityPlaying(false);
+        setUnityLoading(false);
+        setLoadingPercent(0);
+        setUnityReady(false);
+        resetGame();
         return;
       }
 
@@ -91,7 +112,43 @@ export default function UnityModal() {
     };
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [setUnityStats]);
+  }, [setUnityStats, setUnityPlaying, setUnityLoading, resetGame]);
+
+  // Intercept browser console logs to dynamically extract score details logged by Unity
+  useEffect(() => {
+    if (!unityPlaying) return;
+
+    const originalLog = console.log;
+    const originalInfo = console.info;
+    const originalWarn = console.warn;
+
+    const interceptor = (originalFn: Function) => (...args: any[]) => {
+      // Call original log so it displays in developer console
+      originalFn.apply(console, args);
+
+      // Convert arguments to a single string
+      const logString = args.map(arg => typeof arg === 'string' ? arg : String(arg)).join(' ');
+
+      // Parse score values (looking for patterns like "score: 195" or "Score = 576")
+      const scoreMatch = logString.match(/(?:current score|total score|final score|score)\s*[:=]?\s*(\d+)/i);
+      if (scoreMatch) {
+        const parsedScore = parseInt(scoreMatch[1], 10);
+        if (!isNaN(parsedScore)) {
+          setUnityStats({ score: parsedScore });
+        }
+      }
+    };
+
+    console.log = interceptor(originalLog);
+    console.info = interceptor(originalInfo);
+    console.warn = interceptor(originalWarn);
+
+    return () => {
+      console.log = originalLog;
+      console.info = originalInfo;
+      console.warn = originalWarn;
+    };
+  }, [unityPlaying, setUnityStats]);
 
   // Auto-focus the iframe content window so keyboard controls work instantly
   useEffect(() => {
@@ -184,7 +241,7 @@ export default function UnityModal() {
             {/* Full screen Unity WebGL game canvas inside an iframe */}
             <iframe 
               ref={iframeRef}
-              src="/unity-game/index.html" 
+              src={iframeSrc} 
               className="w-full h-full border-none block bg-[#231F20]" 
               allow="autoplay; gamepad"
               onLoad={() => {
