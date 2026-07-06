@@ -35,8 +35,8 @@ export default function InfoPanel() {
 
   // Align flex items based on layout
   const justifyClass = useMemo(() => {
-    if (layout === 'left') return 'justify-start px-4 md:px-24';
-    return 'justify-end px-4 md:px-24';
+    if (layout === 'left') return 'justify-start px-4 lg:px-24';
+    return 'justify-end px-4 lg:px-24';
   }, [layout]);
 
   // Framer Motion animation values based on layout
@@ -50,43 +50,43 @@ export default function InfoPanel() {
   }, [layout]);
 
   return (
-    <div className={`absolute inset-0 w-full h-full pointer-events-none z-20 flex items-start pt-12 md:items-center md:pt-0 select-none font-sans ${justifyClass}`}>
+    <div className={`absolute inset-0 w-full h-full pointer-events-none z-20 flex items-start pt-12 lg:items-center lg:pt-0 select-none font-sans ${justifyClass}`}>
       <AnimatePresence mode="wait">
         {activeCheckpoint && (
           <motion.div
             key={activeCheckpoint.id + '-' + layout}
             {...animationProps}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="w-full max-w-[210px] md:max-w-sm flex gap-3 md:gap-6 items-start text-[#023B22] pointer-events-auto"
+            className="w-full max-w-[210px] lg:max-w-sm flex gap-3 lg:gap-6 items-start text-[#023B22] pointer-events-auto"
           >
             {/* Left side timeline indicator */}
-            <div className="flex flex-col items-center h-24 md:h-48">
-              <div className="w-1 h-1 md:w-2.5 md:h-2.5 rounded-full border border-[#023B22] bg-white" />
+            <div className="flex flex-col items-center h-24 lg:h-48">
+              <div className="w-1 h-1 lg:w-2.5 lg:h-2.5 rounded-full border border-[#023B22] bg-white" />
               <div className="w-0.5 bg-[#023B22]/20 flex-1 my-1" />
-              <div className="text-[7px] md:text-[9px] font-mono tracking-widest text-[#023B22]/50 rotate-90 origin-left translate-y-3">
+              <div className="text-[7px] lg:text-[9px] font-mono tracking-widest text-[#023B22]/50 rotate-90 origin-left translate-y-3">
                 {Math.round(activeCheckpoint.progress * 100)}%
               </div>
             </div>
 
             {/* Main Text details */}
-            <div className="flex flex-col gap-1 md:gap-3 max-w-xs pr-2">
+            <div className="flex flex-col gap-1 lg:gap-3 max-w-xs pr-2">
               <h2 
-                className="text-xs md:text-3xl font-light tracking-wide capitalize"
+                className="text-xs lg:text-3xl font-light tracking-wide capitalize"
                 style={{ fontFamily: 'Georgia, serif' }}
               >
                 {activeCheckpoint.title}
               </h2>
               
-              <p className="text-[9px] md:text-sm leading-relaxed font-light text-[#023B22]/85">
+              <p className="text-[9px] lg:text-sm leading-relaxed font-light text-[#023B22]/85">
                 {activeCheckpoint.description}
               </p>
 
               {activeCheckpoint.tags && (
-                <div className="flex flex-wrap gap-1 md:gap-1.5 mt-1 md:mt-2">
+                <div className="flex flex-wrap gap-1 lg:gap-1.5 mt-1 lg:mt-2">
                   {activeCheckpoint.tags.map((tag) => (
                     <span 
                       key={tag} 
-                      className="text-[7.5px] md:text-[9px] uppercase tracking-wider px-1.5 py-0.5 border border-[#023B22]/15 bg-white/50 rounded font-mono"
+                      className="text-[7.5px] lg:text-[9px] uppercase tracking-wider px-1.5 py-0.5 border border-[#023B22]/15 bg-white/50 rounded font-mono"
                     >
                       {tag}
                     </span>

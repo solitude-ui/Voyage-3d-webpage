@@ -37,7 +37,6 @@ export const useScrollDrive = () => {
         state.unityPlaying ||
         state.isPaused ||
         state.feedbackOpen ||
-        !state.loginSubmitted ||
         state.profileDrawerOpen
       );
     };
@@ -66,7 +65,7 @@ export const useScrollDrive = () => {
       const currentProgress = state.scrollProgress;
       const target = state.targetProgress;
       const activeUnity = state.unityPlaying;
-      const paused = state.isPaused || state.feedbackOpen || !state.loginSubmitted || state.profileDrawerOpen;
+      const paused = state.isPaused || state.feedbackOpen || state.profileDrawerOpen;
 
       if (!activeUnity && !paused) {
         // Smooth circular lerp

@@ -131,20 +131,20 @@ export default function Dashboard() {
     <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-30 font-sans">
       
       {/* PERSISTENT HEADER: TOP CENTER "VOYAGE" */}
-      <div className="absolute top-3 md:top-8 left-1/2 -translate-x-1/2 text-center pointer-events-auto">
+      <div className="absolute top-3 lg:top-8 left-1/2 -translate-x-1/2 text-center pointer-events-auto">
         <h1 
-          className="text-lg md:text-5xl tracking-[0.2em] font-light text-[#023B22] uppercase"
+          className="text-lg lg:text-5xl tracking-[0.2em] font-light text-[#023B22] uppercase"
           style={{ fontFamily: 'Georgia, serif' }}
         >
           VOYAGE
         </h1>
-        <p className="text-[6px] md:text-[9px] uppercase tracking-[0.3em] text-[#023B22]/70 font-mono mt-0.5">
+        <p className="text-[6px] lg:text-[9px] uppercase tracking-[0.3em] text-[#023B22]/70 font-mono mt-0.5">
           Car Traffic Simulator
         </p>
       </div>
 
       {/* TOP RIGHT CONTROLS: FULLSCREEN & PROFILE */}
-      <div className="absolute top-3 md:top-8 right-3 md:right-8 pointer-events-auto flex items-center gap-2.5">
+      <div className="absolute top-3 lg:top-8 right-3 lg:right-8 pointer-events-auto flex items-center gap-2.5">
         {/* Pause / Play Button */}
         {!unityPlaying && (
           <button
@@ -152,7 +152,7 @@ export default function Dashboard() {
             className="p-2 rounded-full bg-white/40 hover:bg-white text-[#023B22] border border-[#023B22]/15 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
             title={isPaused ? "Resume Driving" : "Pause Driving"}
           >
-            {isPaused ? <Play className="w-3.5 h-3.5 md:w-4 md:h-4" /> : <Pause className="w-3.5 h-3.5 md:w-4 md:h-4" />}
+            {isPaused ? <Play className="w-3.5 h-3.5 lg:w-4 lg:h-4" /> : <Pause className="w-3.5 h-3.5 lg:w-4 lg:h-4" />}
           </button>
         )}
 
@@ -162,7 +162,7 @@ export default function Dashboard() {
           className="p-2 rounded-full bg-white/40 hover:bg-white text-[#023B22] border border-[#023B22]/15 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
           title="Toggle Fullscreen"
         >
-          {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 md:w-4 md:h-4" /> : <Maximize2 className="w-3.5 h-3.5 md:w-4 md:h-4" />}
+          {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 lg:w-4 lg:h-4" /> : <Maximize2 className="w-3.5 h-3.5 lg:w-4 lg:h-4" />}
         </button>
 
         {/* Profile Card */}
@@ -170,7 +170,7 @@ export default function Dashboard() {
           className="flex items-center gap-3 cursor-pointer"
           onClick={() => setProfileDrawerOpen(true)}
         >
-          <div className="text-right hidden md:block">
+          <div className="text-right hidden lg:block">
             <div className="text-xs font-semibold text-[#023B22] tracking-wider uppercase">Adil Niham</div>
             <div className="text-[9px] text-[#023B22]/60 uppercase tracking-widest font-mono">Lead Programmer</div>
           </div>
@@ -185,11 +185,11 @@ export default function Dashboard() {
             initial={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -25 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="absolute top-3 left-3 right-auto md:top-8 md:left-8 pointer-events-auto bg-white/45 backdrop-blur-md border border-[#023B22]/10 p-2 md:p-4 rounded shadow-sm w-36 md:w-48 flex flex-col gap-2 md:gap-3 text-[#023B22]"
+            className="absolute top-3 left-3 right-auto lg:top-8 lg:left-8 pointer-events-auto bg-white/45 backdrop-blur-md border border-[#023B22]/10 p-2 lg:p-4 rounded shadow-sm w-36 lg:w-48 flex flex-col gap-2 lg:gap-3 text-[#023B22]"
           >
             {/* Logged in User Indicator & Logout */}
             {profile && (
-              <div className="text-[7px] md:text-[8px] text-[#023B22]/70 font-mono font-bold tracking-wider border-b border-[#023B22]/10 pb-1 md:pb-1.5 mb-0.5 flex justify-between items-center w-full">
+              <div className="text-[7px] lg:text-[8px] text-[#023B22]/70 font-mono font-bold tracking-wider border-b border-[#023B22]/10 pb-1 lg:pb-1.5 mb-0.5 flex justify-between items-center w-full">
                 <span>PILOT: {profile.name}</span>
                 <button
                   onClick={handleLogout}
@@ -199,16 +199,16 @@ export default function Dashboard() {
                 </button>
               </div>
             )}
-            <div className="flex flex-col gap-1.5 md:gap-3 w-full">
+            <div className="flex flex-col gap-1.5 lg:gap-3 w-full">
               <div className="text-left">
-                <div className="text-[7px] md:text-[8px] text-[#023B22]/55 uppercase tracking-widest font-mono mb-0.5 md:mb-1">Current Score</div>
-                <div className="text-sm md:text-xl font-light tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                <div className="text-[7px] lg:text-[8px] text-[#023B22]/55 uppercase tracking-widest font-mono mb-0.5 lg:mb-1">Current Score</div>
+                <div className="text-sm lg:text-xl font-light tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                   {unityStats.score}
                 </div>
               </div>
-              <div className="border-t border-[#023B22]/10 pt-1.5 md:pt-3 text-left">
-                <div className="text-[7px] md:text-[8px] text-[#023B22]/55 uppercase tracking-widest font-mono mb-0.5 md:mb-1">Maximum Score</div>
-                <div className="text-sm md:text-xl font-light tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+              <div className="border-t border-[#023B22]/10 pt-1.5 lg:pt-3 text-left">
+                <div className="text-[7px] lg:text-[8px] text-[#023B22]/55 uppercase tracking-widest font-mono mb-0.5 lg:mb-1">Maximum Score</div>
+                <div className="text-sm lg:text-xl font-light tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                   {highScore}
                 </div>
               </div>
@@ -224,7 +224,7 @@ export default function Dashboard() {
             initial={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 25 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-8 pointer-events-auto bg-white/45 backdrop-blur-md border border-[#023B22]/10 p-5 rounded-lg shadow-sm w-48 flex flex-col gap-2.5 text-[#023B22]"
+            className="hidden lg:flex absolute top-1/2 -translate-y-1/2 right-8 pointer-events-auto bg-white/45 backdrop-blur-md border border-[#023B22]/10 p-5 rounded-lg shadow-sm w-48 flex flex-col gap-2.5 text-[#023B22]"
           >
             <div>
               <div className="text-[8px] text-[#023B22]/55 uppercase tracking-widest font-mono mb-1">Navigation</div>
@@ -247,9 +247,9 @@ export default function Dashboard() {
             initial={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 15 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="absolute bottom-3 right-3 left-auto md:bottom-8 md:left-1/2 md:-translate-x-1/2 pointer-events-auto bg-white/45 backdrop-blur-md border border-[#023B22]/10 p-1.5 md:p-4 rounded shadow-sm flex items-center gap-2 text-[#023B22] font-mono text-[7.5px] md:text-[10px] uppercase tracking-widest whitespace-nowrap w-auto"
+            className="absolute bottom-3 right-3 left-auto lg:bottom-8 lg:left-1/2 lg:-translate-x-1/2 pointer-events-auto bg-white/45 backdrop-blur-md border border-[#023B22]/10 p-1.5 lg:p-4 rounded shadow-sm flex items-center gap-2 text-[#023B22] font-mono text-[7.5px] lg:text-[10px] uppercase tracking-widest whitespace-nowrap w-auto"
           >
-            <span className="text-[7px] md:text-[8.5px] text-[#023B22]/60 font-bold mr-1">VEHICLE:</span>
+            <span className="text-[7px] lg:text-[8.5px] text-[#023B22]/60 font-bold mr-1">VEHICLE:</span>
             {[
               { id: 'challenger', label: 'DODGE CHALLENGER' },
               { id: 'suv', label: 'SUV' },
@@ -260,7 +260,7 @@ export default function Dashboard() {
                   type="button"
                   key={car.id}
                   onClick={() => setSelectedCar(car.id as 'suv' | 'challenger')}
-                  className={`px-2.5 py-1.5 md:px-4.5 md:py-2.5 rounded text-[7.5px] md:text-[9.5px] font-bold tracking-widest cursor-pointer transition-all ${
+                  className={`px-2.5 py-1.5 lg:px-4.5 lg:py-2.5 rounded text-[7.5px] lg:text-[9.5px] font-bold tracking-widest cursor-pointer transition-all ${
                     active 
                       ? 'bg-[#023B22] text-white shadow-sm font-black' 
                       : 'bg-white/40 hover:bg-white/60 text-[#023B22]/70 hover:text-[#023B22]'
@@ -275,10 +275,10 @@ export default function Dashboard() {
       </AnimatePresence>
 
       {/* FLOATING PLAY BUTTON (BOTTOM-LEFT, PERSISTENT) */}
-      <div className="absolute bottom-3 left-3 right-auto md:left-8 md:bottom-8 pointer-events-auto w-auto">
+      <div className="absolute bottom-3 left-3 right-auto lg:left-8 lg:bottom-8 pointer-events-auto w-auto">
         <button
           onClick={handlePlayClick}
-          className="flex items-center justify-center gap-2 w-auto px-4 py-2 rounded bg-white/85 hover:bg-white text-[#023B22] font-semibold text-[8px] md:text-xs tracking-widest uppercase border border-[#023B22]/15 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
+          className="flex items-center justify-center gap-2 w-auto px-4 py-2 rounded bg-white/85 hover:bg-white text-[#023B22] font-semibold text-[8px] lg:text-xs tracking-widest uppercase border border-[#023B22]/15 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
         >
           <span>START GAME</span>
         </button>
@@ -300,16 +300,16 @@ export default function Dashboard() {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 300, opacity: 0 }}
               transition={{ type: 'spring', damping: 20 }}
-              className="w-full max-w-sm h-full bg-[#E2ECF5]/95 border-l border-white/20 p-5 md:p-8 flex flex-col justify-between text-[#023B22] font-mono shadow-2xl relative"
+              className="w-full max-w-sm h-full bg-[#E2ECF5]/95 border-l border-white/20 p-5 lg:p-8 flex flex-col justify-between text-[#023B22] font-mono shadow-2xl relative"
             >
               <button
                 onClick={() => setProfileDrawerOpen(false)}
-                className="absolute top-4 right-4 md:top-6 md:right-6 text-[#023B22]/50 hover:text-[#023B22] z-10"
+                className="absolute top-4 right-4 lg:top-6 lg:right-6 text-[#023B22]/50 hover:text-[#023B22] z-10"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex-1 overflow-y-auto pr-2 mt-8 mb-4 md:mt-12 md:mb-6 flex flex-col gap-5 md:gap-6 scrollbar-thin">
+              <div className="flex-1 overflow-y-auto pr-2 mt-8 mb-4 lg:mt-12 lg:mb-6 flex flex-col gap-5 lg:gap-6 scrollbar-thin">
                 <div className="flex items-center gap-4">
                   <ProfileAvatar size="lg" />
                   <div>
@@ -354,7 +354,7 @@ export default function Dashboard() {
               <a
                 href={profileData.resumeUrl}
                 download
-                className="flex items-center justify-center gap-2 py-3.5 md:py-4 w-full bg-[#023B22] hover:bg-[#034d2d] text-white font-bold text-xs tracking-widest uppercase rounded shadow-sm transition-all"
+                className="flex items-center justify-center gap-2 py-3.5 lg:py-4 w-full bg-[#023B22] hover:bg-[#034d2d] text-white font-bold text-xs tracking-widest uppercase rounded shadow-sm transition-all"
               >
                 <FileText className="w-4 h-4" />
                 <span>DOWNLOAD RESUME</span>
