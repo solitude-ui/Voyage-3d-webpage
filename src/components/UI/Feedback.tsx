@@ -15,8 +15,9 @@ export default function Feedback({
   const { profile, setFeedbackSubmitted } = useGameStore();
 
   const [rating, setRating] = useState(5);
-  const [suggestions, setSuggestions] = useState('');
-  const [favoriteFeature, setFavoriteFeature] = useState('');
+  const [favoriteFeature, setFavoriteFeature] = useState(''); // experience
+  const [bugReport, setBugReport] = useState(''); // negatives
+  const [suggestions, setSuggestions] = useState(''); // improvements
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -26,7 +27,7 @@ export default function Feedback({
     setErrorMsg('');
     setLoading(true);
 
-    if (!suggestions.trim() || !favoriteFeature.trim()) {
+    if (!favoriteFeature.trim() || !bugReport.trim() || !suggestions.trim()) {
       setErrorMsg('All review parameters are mandatory.');
       setLoading(false);
       return;
@@ -37,7 +38,7 @@ export default function Feedback({
       country: 'N/A',
       rating,
       suggestions: suggestions.trim(),
-      bugReport: '',
+      bugReport: bugReport.trim(),
       favoriteFeature: favoriteFeature.trim(),
       timestamp: new Date().toISOString(),
     };
@@ -118,32 +119,47 @@ export default function Feedback({
                     </div>
                   </div>
 
-                  {/* Favorite Feature */}
+                  {/* Question 1: Experience */}
                   <div className="flex flex-col gap-1">
                     <label className="text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
-                      FAVORITE FEATURE
+                      1. HOW IS THE EXPERIENCE?
                     </label>
                     <input
                       type="text"
                       required
                       value={favoriteFeature}
                       onChange={(e) => setFavoriteFeature(e.target.value)}
-                      placeholder="e.g. atmospheric rendering, smooth physics..."
+                      placeholder="Describe your gameplay experience..."
                       className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-2 px-3 placeholder-[#023B22]/20 font-bold"
                     />
                   </div>
 
-                  {/* Suggestions */}
+                  {/* Question 2: Negatives */}
                   <div className="flex flex-col gap-1">
                     <label className="text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
-                      DETAILED REVIEW & FEEDBACK
+                      2. WHAT ARE THE NEGATIVES?
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={bugReport}
+                      onChange={(e) => setBugReport(e.target.value)}
+                      placeholder="List any bugs, issues, or negatives..."
+                      className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-2 px-3 placeholder-[#023B22]/20 font-bold"
+                    />
+                  </div>
+
+                  {/* Question 3: Improvements */}
+                  <div className="flex flex-col gap-1">
+                    <label className="text-[9px] text-[#023B22] font-bold uppercase tracking-wider">
+                      3. GIVE IDEA ABOUT IMPROVEMENTS
                     </label>
                     <textarea
-                      rows={3}
+                      rows={2}
                       required
                       value={suggestions}
                       onChange={(e) => setSuggestions(e.target.value)}
-                      placeholder="Write your review here..."
+                      placeholder="Suggestions to improve the game..."
                       className="w-full bg-white/70 border border-[#023B22]/10 focus:border-[#023B22]/45 focus:outline-none rounded py-2 px-3 placeholder-[#023B22]/20 font-bold resize-none font-sans"
                     />
                   </div>
