@@ -31,7 +31,7 @@ export default function Home() {
   const unityPlaying = useGameStore((state) => state.unityPlaying);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden select-none bg-[#CADAE8]">
+    <div className="relative w-screen h-[100dvh] overflow-hidden select-none bg-[#CADAE8]">
       
       {/* 1. Three.js 3D WebGL Canvas Layer (Base, z-0) */}
       {!unityPlaying && <ThreeCanvas />}

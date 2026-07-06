@@ -64,7 +64,7 @@ interface GameState {
 export const useGameStore = create<GameState>((set) => ({
   profile: null,
   loginSubmitted: false,
-  selectedCar: 'suv',
+  selectedCar: 'challenger',
   
   scrollProgress: 0,
   targetProgress: 0,
