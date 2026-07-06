@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useGameStore } from '../../hooks/useGameStore';
 import profileData from '../../../content/profile.json';
 import timelineData from '../../../content/timeline.json';
-import { Github, Linkedin, Mail, FileText, X, User, Maximize2, Minimize2 } from 'lucide-react';
+import { Github, Linkedin, Mail, FileText, X, User, Maximize2, Minimize2, Play, Pause } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ProfileAvatar = ({ size }: { size: 'sm' | 'lg' }) => {
@@ -36,10 +36,15 @@ export default function Dashboard() {
     setActiveCheckpointIndex,
     setUnityLoading,
     setUnityPlaying,
+    unityPlaying,
     loginSubmitted,
     selectedCar,
     setSelectedCar,
     profile,
+    profileDrawerOpen,
+    setProfileDrawerOpen,
+    isPaused,
+    setIsPaused,
   } = useGameStore();
 
   const handleLogout = async () => {
@@ -77,7 +82,6 @@ export default function Dashboard() {
     }
   };
 
-  const [profileDrawerOpen, setProfileDrawerOpen] = useState(false);
   const unityStats = useGameStore((s) => s.unityStats);
   const [highScore, setHighScore] = useState(0);
 
@@ -140,7 +144,18 @@ export default function Dashboard() {
       </div>
 
       {/* TOP RIGHT CONTROLS: FULLSCREEN & PROFILE */}
-      <div className="absolute top-3 md:top-8 right-3 md:right-8 pointer-events-auto flex items-center gap-3">
+      <div className="absolute top-3 md:top-8 right-3 md:right-8 pointer-events-auto flex items-center gap-2.5">
+        {/* Pause / Play Button */}
+        {!unityPlaying && (
+          <button
+            onClick={() => setIsPaused(!isPaused)}
+            className="p-2 rounded-full bg-white/40 hover:bg-white text-[#023B22] border border-[#023B22]/15 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
+            title={isPaused ? "Resume Driving" : "Pause Driving"}
+          >
+            {isPaused ? <Play className="w-3.5 h-3.5 md:w-4 md:h-4" /> : <Pause className="w-3.5 h-3.5 md:w-4 md:h-4" />}
+          </button>
+        )}
+
         {/* Fullscreen Button */}
         <button
           onClick={toggleFullscreen}

@@ -31,8 +31,19 @@ export const useScrollDrive = () => {
 
     lenisRef.current = lenis;
 
+    const isInputBlocked = () => {
+      const state = useGameStore.getState();
+      return (
+        state.unityPlaying ||
+        state.isPaused ||
+        state.feedbackOpen ||
+        !state.loginSubmitted ||
+        state.profileDrawerOpen
+      );
+    };
+
     const handleScroll = (e: any) => {
-      if (unityPlaying) return;
+      if (isInputBlocked()) return;
 
       const delta = e.deltaY || e.velocity || 0;
       const sensitivity = 0.00015;
@@ -51,11 +62,13 @@ export const useScrollDrive = () => {
     const tick = (time: number) => {
       lenis.raf(time);
 
-      const currentProgress = useGameStore.getState().scrollProgress;
-      const target = useGameStore.getState().targetProgress;
-      const activeUnity = useGameStore.getState().unityPlaying;
+      const state = useGameStore.getState();
+      const currentProgress = state.scrollProgress;
+      const target = state.targetProgress;
+      const activeUnity = state.unityPlaying;
+      const paused = state.isPaused || state.feedbackOpen || !state.loginSubmitted || state.profileDrawerOpen;
 
-      if (!activeUnity) {
+      if (!activeUnity && !paused) {
         // Smooth circular lerp
         const lerpFactor = 0.06;
         let nextProgress = currentProgress;
@@ -98,7 +111,7 @@ export const useScrollDrive = () => {
     // - ArrowUp, ArrowRight, W, D: move forward (increase progress)
     // - ArrowDown, ArrowLeft, S, A: move backward (decrease progress)
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (useGameStore.getState().unityPlaying) return;
+      if (isInputBlocked()) return;
 
       const step = 0.02;
       let nextTarget = useGameStore.getState().targetProgress;
@@ -131,12 +144,12 @@ export const useScrollDrive = () => {
 
     // Mobile touch
     const handleTouchStart = (e: TouchEvent) => {
-      if (useGameStore.getState().unityPlaying) return;
+      if (isInputBlocked()) return;
       touchStartY.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (useGameStore.getState().unityPlaying) return;
+      if (isInputBlocked()) return;
       
       const currentY = e.touches[0].clientY;
       const deltaY = touchStartY.current - currentY;
@@ -162,7 +175,7 @@ export const useScrollDrive = () => {
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('wheel', handleScroll);
     };
-  }, [unityPlaying, targetProgress]);
+  }, [unityPlaying]);
 
   return lenisRef.current;
 };

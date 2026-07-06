@@ -57,27 +57,27 @@ export default function InfoPanel() {
             key={activeCheckpoint.id + '-' + layout}
             {...animationProps}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="w-full max-w-sm flex gap-4 md:gap-6 items-start text-[#023B22] pointer-events-auto"
+            className="w-full max-w-[210px] md:max-w-sm flex gap-3 md:gap-6 items-start text-[#023B22] pointer-events-auto"
           >
             {/* Left side timeline indicator */}
-            <div className="flex flex-col items-center h-28 md:h-48">
-              <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-full border border-2 border-[#023B22] bg-white" />
+            <div className="flex flex-col items-center h-24 md:h-48">
+              <div className="w-1 h-1 md:w-2.5 md:h-2.5 rounded-full border border-[#023B22] bg-white" />
               <div className="w-0.5 bg-[#023B22]/20 flex-1 my-1" />
-              <div className="text-[7.5px] md:text-[9px] font-mono tracking-widest text-[#023B22]/50 rotate-90 origin-left translate-y-3">
+              <div className="text-[7px] md:text-[9px] font-mono tracking-widest text-[#023B22]/50 rotate-90 origin-left translate-y-3">
                 {Math.round(activeCheckpoint.progress * 100)}%
               </div>
             </div>
 
             {/* Main Text details */}
-            <div className="flex flex-col gap-1.5 md:gap-3 max-w-xs pr-4">
+            <div className="flex flex-col gap-1 md:gap-3 max-w-xs pr-2">
               <h2 
-                className="text-base md:text-3xl font-light tracking-wide capitalize"
+                className="text-xs md:text-3xl font-light tracking-wide capitalize"
                 style={{ fontFamily: 'Georgia, serif' }}
               >
                 {activeCheckpoint.title}
               </h2>
               
-              <p className="text-[10px] md:text-sm leading-relaxed font-light text-[#023B22]/85">
+              <p className="text-[9px] md:text-sm leading-relaxed font-light text-[#023B22]/85">
                 {activeCheckpoint.description}
               </p>
 

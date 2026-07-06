@@ -42,6 +42,11 @@ interface GameState {
   feedbackSubmitted: boolean;
   feedbackOpen: boolean;
   
+  profileDrawerOpen: boolean;
+  setProfileDrawerOpen: (open: boolean) => void;
+  isPaused: boolean;
+  setIsPaused: (paused: boolean) => void;
+
   // Actions
   setProfile: (profile: UserProfile) => void;
   setLoginSubmitted: (submitted: boolean) => void;
@@ -90,6 +95,10 @@ export const useGameStore = create<GameState>((set) => ({
   
   feedbackSubmitted: false,
   feedbackOpen: false,
+  profileDrawerOpen: false,
+  setProfileDrawerOpen: (profileDrawerOpen) => set({ profileDrawerOpen }),
+  isPaused: false,
+  setIsPaused: (isPaused) => set({ isPaused }),
 
   setProfile: (profile) => {
     localStorage.setItem('voyage_profile', JSON.stringify(profile));
