@@ -35,8 +35,8 @@ export default function InfoPanel() {
 
   // Align flex items based on layout
   const justifyClass = useMemo(() => {
-    if (layout === 'left') return 'justify-center md:justify-start px-6 md:px-24';
-    return 'justify-center md:justify-end px-6 md:px-24';
+    if (layout === 'left') return 'justify-start px-4 md:px-24';
+    return 'justify-end px-4 md:px-24';
   }, [layout]);
 
   // Framer Motion animation values based on layout
