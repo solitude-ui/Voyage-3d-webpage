@@ -3,11 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { useGameStore } from '../../hooks/useGameStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, ArrowRight, User, Lock, ShieldAlert } from 'lucide-react';
+import { Terminal, ArrowRight, User, Lock, ShieldAlert, X } from 'lucide-react';
 
 export default function FTUX() {
   const { 
     unityPlaying, 
+    setUnityPlaying,
     loginSubmitted, 
     setProfile, 
     setUnityLoading,
@@ -111,6 +112,18 @@ export default function FTUX() {
             transition={{ type: 'spring', damping: 20 }}
             className="w-full max-w-md bg-[#E2ECF5]/95 border border-white/30 p-5 md:p-8 rounded-lg shadow-2xl relative text-[#023B22] max-h-[90vh] overflow-y-auto scrollbar-thin pr-3"
           >
+            {/* Exit/Back Button */}
+            <button
+              onClick={() => {
+                setUnityPlaying(false);
+                setUnityLoading(false);
+              }}
+              className="absolute top-4 right-4 text-[#023B22]/50 hover:text-[#023B22] cursor-pointer"
+              type="button"
+              title="Back to Portfolio"
+            >
+              <X className="w-4 h-4" />
+            </button>
             {/* Title */}
             <div className="flex items-center gap-1.5 border-b border-[#023B22]/10 pb-2 mb-3 lg:pb-4 lg:mb-6">
               <Terminal className="w-4 h-4 lg:w-5 lg:h-5 text-[#023B22] animate-pulse" />
