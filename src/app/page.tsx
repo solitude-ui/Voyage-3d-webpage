@@ -67,6 +67,17 @@ export default function Home() {
         )}
       </AnimatePresence>
 
+      {/* 5. Portrait Orientation Lock Overlay on Mobile Devices */}
+      <div className="fixed inset-0 z-[100] flex-col items-center justify-center bg-[#CADAE8] text-[#023B22] p-6 text-center md:hidden portrait:flex landscape:hidden select-none font-mono">
+        <div className="w-12 h-12 mb-6 border-4 border-[#023B22] border-t-transparent rounded-full animate-spin" />
+        <h2 className="text-xs font-black tracking-widest uppercase mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+          Rotate Your Device
+        </h2>
+        <p className="text-[9px] uppercase tracking-wider text-[#023B22]/70 max-w-xs leading-relaxed">
+          Voyage is designed and optimized for landscape viewing. Please rotate your device to begin.
+        </p>
+      </div>
+
     </div>
   );
 }
