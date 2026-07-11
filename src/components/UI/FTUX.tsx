@@ -103,14 +103,14 @@ export default function FTUX() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 font-mono select-none"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-2 xs:p-4 font-mono"
         >
           <motion.div
             initial={{ scale: 0.95, y: 30, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.95, y: 30, opacity: 0 }}
             transition={{ type: 'spring', damping: 20 }}
-            className="w-full max-w-md bg-[#E2ECF5]/95 border border-white/30 p-5 md:p-8 rounded-lg shadow-2xl relative text-[#023B22] max-h-[90vh] overflow-y-auto scrollbar-thin pr-3"
+            className="w-full max-w-md bg-[#E2ECF5]/95 border border-white/30 p-4 xs:p-5 md:p-8 rounded-lg shadow-2xl relative text-[#023B22] max-h-[95vh] lg:max-h-[90vh] overflow-y-auto scrollbar-thin pr-3 pb-8"
           >
             {/* Exit/Back Button */}
             <button

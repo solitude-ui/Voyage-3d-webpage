@@ -308,12 +308,19 @@ export default function UnityModal() {
               )}
             </AnimatePresence>
 
-            {/* Minimalist Floating END SIMULATION button in bottom-left */}
+            {/* Minimalist Floating END SIMULATION button (Desktop only, styled to match mobile layout) */}
             {!unityLoading && (
-              <div className="absolute bottom-6 left-6 z-40 pointer-events-auto">
+              <div 
+                className="absolute z-40 pointer-events-auto hidden lg:block"
+                style={{
+                  bottom: '20px',
+                  left: 'calc(50% + 20px)',
+                  transform: 'translateX(-50%)'
+                }}
+              >
                 <button
                   onClick={handleEndSimulation}
-                  className="px-5 py-3 bg-[#023B22] hover:bg-[#034d2d] text-white font-bold text-[10px] tracking-widest uppercase rounded shadow-lg transition-transform active:scale-95 cursor-pointer"
+                  className="px-6 py-3.5 bg-[#023B22]/65 hover:bg-[#023B22]/90 text-white font-bold text-[10px] tracking-widest uppercase rounded border border-white/15 backdrop-blur-[4px] shadow-lg transition-all active:scale-95 cursor-pointer"
                 >
                   END SIMULATION
                 </button>

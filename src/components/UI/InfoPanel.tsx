@@ -50,7 +50,7 @@ export default function InfoPanel() {
   }, [layout]);
 
   return (
-    <div className={`absolute inset-0 w-full h-full pointer-events-none z-20 flex items-start pt-12 lg:items-center lg:pt-0 select-none font-sans ${justifyClass}`}>
+    <div className={`fixed inset-0 w-full h-full pointer-events-none z-20 flex items-start pt-12 lg:items-center lg:pt-0 select-none font-sans ${justifyClass}`}>
       <AnimatePresence mode="wait">
         {activeCheckpoint && (
           <motion.div

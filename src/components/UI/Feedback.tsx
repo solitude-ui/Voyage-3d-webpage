@@ -73,9 +73,9 @@ export default function Feedback({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-4 font-mono select-none"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-2 xs:p-4 font-mono"
         >
-          <div className="w-full max-w-md bg-[#E2ECF5]/95 border border-[#023B22]/20 p-5 md:p-6 rounded-lg shadow-2xl relative text-[#023B22] max-h-[90vh] overflow-y-auto scrollbar-thin pr-3">
+          <div className="w-full max-w-md bg-[#E2ECF5]/95 border border-[#023B22]/20 p-4 xs:p-5 md:p-6 rounded-lg shadow-2xl relative text-[#023B22] max-h-[95vh] lg:max-h-[90vh] overflow-y-auto scrollbar-thin pr-3 pb-8">
             
             <AnimatePresence mode="wait">
               {!submitted ? (

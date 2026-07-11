@@ -128,7 +128,7 @@ export default function Dashboard() {
   const isAtStart = scrollProgress <= 0.07;
 
   return (
-    <div className="absolute inset-0 w-full h-[100dvh] pointer-events-none select-none z-30 font-sans">
+    <div className="fixed inset-0 w-full h-full pointer-events-none select-none z-30 font-sans">
       
       {/* PERSISTENT HEADER: TOP CENTER "VOYAGE" */}
       <div className="absolute top-3 lg:top-8 left-1/2 -translate-x-1/2 text-center pointer-events-auto">

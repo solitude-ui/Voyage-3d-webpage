@@ -96,6 +96,35 @@
       display: none;
     }
 
+    #exit-btn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: calc(50% + 20px);
+      transform: translateX(-50%);
+      z-index: 999;
+      padding: 14px 24px;
+      background: rgba(2, 59, 34, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-family: monospace;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    #exit-btn:hover, #exit-btn:active {
+      background: rgba(2, 59, 34, 0.9);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
     @media (orientation: portrait) {
       #rotate-cover {
         display: flex;
@@ -109,7 +138,7 @@
   </div>
 
   <!-- Exit Button -->
-  <button id="exit-btn" style="position: fixed; bottom: 24px; left: 24px; z-index: 999; padding: 12px 20px; background: #023B22; color: white; border: none; font-family: monospace; font-size: 10px; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); cursor: pointer;">
+  <button id="exit-btn">
     End Simulation
   </button>
 
@@ -206,6 +235,7 @@
         loadingFill.style.width = (100 * progress) + "%";
       }).then(() => {
         loadingCover.style.display = "none";
+        if (exitBtn) exitBtn.style.display = "block";
         requestLandscape();
         
         window.parent.postMessage("unity-loaded", "*");
