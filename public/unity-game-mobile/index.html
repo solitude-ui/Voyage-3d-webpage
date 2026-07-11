@@ -3,48 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="screen-orientation" content="landscape">
-  <meta name="x5-orientation" content="landscape">
-  <title>Traffic Simulation Game</title>
+  <title>Unity WebGL Player | Traffic Simulation Game</title>
   <style>
     html, body {
+      margin: 0;
+      padding: 0;
       width: 100%;
       height: 100%;
-      margin: 0;
       overflow: hidden;
-      background: #101216;
-      font-family: Arial, Helvetica, sans-serif;
-      touch-action: none;
-      -webkit-user-select: none;
-      user-select: none;
+      background: #231F20;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     #unity-container {
-      position: fixed;
-      inset: 0;
       width: 100%;
       height: 100%;
-      background: #101216;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     #unity-canvas {
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      height: 100% !important;
       display: block;
-      background: #101216;
     }
 
     #loading-cover,
     #rotate-cover {
       position: fixed;
       inset: 0;
-      z-index: 10;
+      z-index: 9999;
+      background: #0f1115;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #101216;
-      color: #f4f7fb;
+      flex-direction: column;
+      color: #ffffff;
       text-align: center;
     }
 
@@ -90,6 +85,7 @@
       color: #08110c;
       font-size: 16px;
       font-weight: 700;
+      cursor: pointer;
     }
 
     #rotate-cover {
@@ -99,30 +95,32 @@
     #exit-btn {
       display: none;
       position: fixed;
-      bottom: 20px;
-      left: calc(50% + 20px);
-      transform: translateX(-50%);
+      top: 150px;
+      left: 24px;
       z-index: 999;
-      padding: 14px 24px;
-      background: rgba(2, 59, 34, 0.65);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      color: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      font-family: monospace;
-      font-size: 10px;
-      font-weight: bold;
-      letter-spacing: 0.15em;
+      width: 105px;
+      height: 28px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.85);
+      color: #023B22;
+      border: 1px solid rgba(2, 59, 34, 0.15);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       border-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
       cursor: pointer;
       transition: all 0.2s ease;
     }
+
     #exit-btn:hover, #exit-btn:active {
-      background: rgba(2, 59, 34, 0.9);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 1.0);
+      color: #023B22;
     }
 
     @media (orientation: portrait) {
@@ -158,13 +156,45 @@
   </div>
 
   <script>
+    const lessonId = new URLSearchParams(window.location.search).get("lessonId");
+
+    window.reportUnitySessionResult = function(payload) {
+      let parsedPayload = payload;
+
+      try {
+        const result = JSON.parse(payload);
+
+        if (lessonId && !result.lessonId) {
+          result.lessonId = lessonId;
+        }
+
+        parsedPayload = JSON.stringify(result);
+      } catch (error) {
+        console.error("Invalid Unity session result payload:", error);
+        return;
+      }
+
+      if (window.parent && window.parent !== window) {
+        if (typeof window.parent.reportUnitySessionResult === "function") {
+          window.parent.reportUnitySessionResult(parsedPayload);
+        }
+
+        window.parent.postMessage({
+          source: "unity-simulation",
+          type: "session-result",
+          payload: parsedPayload
+        }, window.location.origin);
+      }
+    };
+
     function postUnityScore(score) {
       var numericScore = Number(score);
       if (Number.isFinite(numericScore)) {
-        window.parent.postMessage({
-          type: "unity-score",
-          score: Math.max(0, Math.floor(numericScore))
-        }, "*");
+        window.reportUnitySessionResult(JSON.stringify({
+          score: Math.max(0, Math.floor(numericScore)),
+          completed: false,
+          resultId: "unity-score-" + Date.now()
+        }));
       }
     }
 
@@ -174,45 +204,51 @@
     window.UnityScore = postUnityScore;
     window.WebGLBridgeScore = postUnityScore;
 
+    const playButton = document.getElementById("play-button");
+    const rotateCover = document.getElementById("rotate-cover");
+
+    function requestFullscreen() {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(err => console.log(err));
+      } else if (docEl.mozRequestFullScreen) {
+        docEl.mozRequestFullScreen().catch(err => console.log(err));
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen().catch(err => console.log(err));
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen().catch(err => console.log(err));
+      }
+    }
+
+    function requestLandscape() {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock("landscape").catch(err => console.log("Orientation lock failed:", err));
+      }
+    }
+
+    if (playButton) {
+      playButton.addEventListener("click", () => {
+        requestFullscreen();
+        requestLandscape();
+        if (rotateCover) {
+          rotateCover.style.display = "none";
+        }
+      });
+    }
+
+    const container = document.querySelector("#unity-container");
     const canvas = document.querySelector("#unity-canvas");
     const loadingCover = document.querySelector("#loading-cover");
     const loadingFill = document.querySelector("#loading-fill");
-    const playButton = document.querySelector("#play-button");
     const exitBtn = document.querySelector("#exit-btn");
 
     if (exitBtn) {
       exitBtn.addEventListener("click", () => {
-        window.parent.postMessage("exit-unity", "*");
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage("exit-unity", "*");
+        }
       });
     }
-
-    function resizeCanvas() {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
-    }
-
-    async function requestLandscape() {
-      try {
-        if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-        }
-      } catch (error) {}
-
-      try {
-        if (screen.orientation && screen.orientation.lock) {
-          await screen.orientation.lock("landscape");
-        }
-      } catch (error) {}
-
-      resizeCanvas();
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    window.addEventListener("orientationchange", resizeCanvas);
-    playButton.addEventListener("click", requestLandscape);
-    resizeCanvas();
 
     const buildUrl = "Build";
     const loaderUrl = buildUrl + "/Game file- mobile.loader.js";
@@ -235,7 +271,7 @@
         loadingFill.style.width = (100 * progress) + "%";
       }).then(() => {
         loadingCover.style.display = "none";
-        if (exitBtn) exitBtn.style.display = "block";
+        if (exitBtn) exitBtn.style.display = "inline-flex";
         requestLandscape();
         
         window.parent.postMessage("unity-loaded", "*");

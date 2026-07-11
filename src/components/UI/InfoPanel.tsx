@@ -9,29 +9,85 @@ export default function InfoPanel() {
   const scrollProgress = useGameStore((state) => state.scrollProgress);
   const activeCheckpointIndex = useGameStore((state) => state.activeCheckpointIndex);
 
-  // Proximity checkpoint check
-  const activeCheckpoint = useMemo(() => {
+  // Find the latest passed checkpoint (stable reference for layout and thresholding)
+  const passedCp = useMemo(() => {
     const progressInCycle = scrollProgress % 1.0;
     
-    // Clear center welcome instructions from start screen (progress <= 0.05) to avoid blocking visibility
-    if (scrollProgress <= 0.05 || progressInCycle <= 0.05) {
+    // Clear check to allow welcome center text on absolute start screen (progress <= 0.05)
+    if (scrollProgress <= 0.05) {
       return null;
     }
+
+    // Special mapping for the 100% milestone which is at progress 1.0
+    // We trigger it at progress >= 0.88 up to 1.0
+    if (progressInCycle >= 0.88) {
+      return timelineData.find((cp) => cp.progress === 1.0) || null;
+    }
+
+    const sortedCheckpoints = [...timelineData].sort((a, b) => b.progress - a.progress);
     
-    // Checkpoint facts popup range
-    return timelineData.find((cp) => {
-      if (cp.progress === 0) return false;
-      const dist = Math.abs(progressInCycle - cp.progress);
-      return dist <= 0.11;
-    });
+    // Match the 0.0 milestone (Ignition Point) only between 0.06 and 0.15
+    if (progressInCycle >= 0.06 && progressInCycle < 0.20) {
+      return timelineData.find((cp) => cp.progress === 0.0) || null;
+    }
+
+    // General match for middle checkpoints (excluding 0.0 and 1.0)
+    return sortedCheckpoints.find((cp) => progressInCycle >= cp.progress && cp.progress > 0.0 && cp.progress < 1.0) || null;
   }, [scrollProgress]);
 
-  // Determine dynamic card layout (alternating left and right)
+  // Proximity checkpoint check (shows at start of milestone and gradually fades out)
+  const activeCheckpoint = useMemo(() => {
+    if (!passedCp) return null;
+    const progressInCycle = scrollProgress % 1.0;
+
+    if (passedCp.progress === 1.0) {
+      // 100% milestone: starts at 0.88, fades out by 1.0 (window = 0.12)
+      const dist = progressInCycle - 0.88;
+      if (dist >= 0 && dist <= 0.12) {
+        return passedCp;
+      }
+    } else if (passedCp.progress === 0.0) {
+      // 0% milestone (Ignition Point): starts at 0.06, fades out by 0.15 (window = 0.09)
+      const dist = progressInCycle - 0.06;
+      if (dist >= 0 && dist <= 0.09) {
+        return passedCp;
+      }
+    } else {
+      // Standard milestones: starts at cp.progress, fades out after 0.14 (window = 0.14)
+      const dist = progressInCycle - passedCp.progress;
+      if (dist >= 0 && dist <= 0.14) {
+        return passedCp;
+      }
+    }
+    return null;
+  }, [scrollProgress, passedCp]);
+
+  // Compute dynamic opacity for smooth scroll-based fade out
+  const opacity = useMemo(() => {
+    if (!activeCheckpoint) return 0;
+    const progressInCycle = scrollProgress % 1.0;
+    
+    if (activeCheckpoint.progress === 1.0) {
+      const dist = progressInCycle - 0.88;
+      if (dist < 0 || dist > 0.12) return 0;
+      return 1 - (dist / 0.12);
+    } else if (activeCheckpoint.progress === 0.0) {
+      const dist = progressInCycle - 0.06;
+      if (dist < 0 || dist > 0.09) return 0;
+      return 1 - (dist / 0.09);
+    } else {
+      const dist = progressInCycle - activeCheckpoint.progress;
+      if (dist < 0 || dist > 0.14) return 0;
+      return 1 - (dist / 0.14); // dynamic linear fade-out
+    }
+  }, [scrollProgress, activeCheckpoint]);
+
+  // Determine dynamic card layout (alternates strictly starting from left: idx 0 (0%) = left, idx 1 (20%) = right, etc.)
   const layout = useMemo(() => {
-    const layoutType = activeCheckpointIndex % 2;
-    if (layoutType === 1) return 'left';
-    return 'right';
-  }, [activeCheckpointIndex]);
+    if (!passedCp) return 'left';
+    const idx = timelineData.findIndex((cp) => cp.id === passedCp.id);
+    return idx % 2 === 0 ? 'left' : 'right';
+  }, [passedCp]);
 
   // Align flex items based on layout
   const justifyClass = useMemo(() => {
@@ -56,8 +112,11 @@ export default function InfoPanel() {
           <motion.div
             key={activeCheckpoint.id + '-' + layout}
             {...animationProps}
+            style={{ opacity }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="w-full max-w-[210px] lg:max-w-sm flex gap-3 lg:gap-6 items-start text-[#023B22] pointer-events-auto"
+            className={`w-full max-w-[210px] lg:max-w-sm flex gap-3 lg:gap-6 items-start text-[#023B22] pointer-events-auto transform transition-transform duration-350 ${
+              layout === 'right' ? 'lg:-translate-y-24' : ''
+            }`}
           >
             {/* Left side timeline indicator */}
             <div className="flex flex-col items-center h-24 lg:h-48">

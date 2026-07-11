@@ -9,45 +9,45 @@
   {
     "id": "started-unity",
     "progress": 0.2,
-    "title": "Unity Development",
-    "description": "Fell in love with gameplay programming. Built custom physics controllers, vehicle dynamics, and procedural audio systems.",
+    "title": "Unity & C# Foundations",
+    "description": "Built a strong foundation in Unity Engine and C# through project-based self-learning using YouTube resources. Explored gameplay scripting, object-oriented programming, Unity's component system, scene management, prefabs, and version control to establish the core skills required for game development.",
     "mediaType": "image",
     "mediaUrl": "/journey/images/unity-start.jpg",
-    "tags": ["Unity", "C#", "3D Physics"]
+    "tags": ["Unity", "C#", "OOP", "Gameplay Programming", "Git"]
   },
   {
     "id": "traffic-system",
     "progress": 0.4,
-    "title": "AI Traffic Controller",
-    "description": "Engineered a scalable multi-threaded AI traffic system. Features lane-changing logic, obstruction avoidance, and grid pathfinding.",
+    "title": "3D Asset Creation",
+    "description": "Learned Blender to design and optimize low-poly vehicles, roads, intersections, and environment assets for real-time applications. Integrated custom models into Unity using an efficient asset pipeline while focusing on game-ready optimization and modular asset creation.",
     "mediaType": "video",
     "mediaUrl": "/journey/videos/traffic-demo.mp4",
-    "tags": ["AI", "Pathfinding", "Jobs System"]
+    "tags": ["Blender", "3D Modeling", "Low Poly", "Game Assets", "FBX", "Unity Pipeline"]
   },
   {
     "id": "graphics-upgrade",
     "progress": 0.6,
-    "title": "URP & Custom HLSL",
-    "description": "Integrated Unity's Universal Render Pipeline. Crafted custom vehicle paint shaders (metallic, flake, clear coat) and environmental rain effects.",
+    "title": "Core Gameplay Prototype",
+    "description": "Developed the foundation of the driving simulator by implementing player-controlled vehicle movement, Rigidbody physics, camera systems, collision detection, checkpoints, and interactive gameplay mechanics. Established the core gameplay loop for the traffic learning experience.",
     "mediaType": "image",
     "mediaUrl": "/journey/images/graphics-demo.jpg",
-    "tags": ["URP", "HLSL", "Shaders"]
+    "tags": ["Unity Physics", "Vehicle Controller", "Rigidbody", "Collision Detection", "Camera System"]
   },
   {
     "id": "multiplayer-update",
     "progress": 0.8,
-    "title": "Realtime Multiplayer",
-    "description": "Developed server-authoritative multiplayer using Photon Fusion. Built prediction buffers for lag compensation and physics sync.",
+    "title": "Traffic Learning Systems",
+    "description": "Integrated educational gameplay mechanics including traffic rule validation, scoring, real-time feedback, modular UI, and progression systems. Focused on combining simulation with gamification to create an engaging learner-driver experience.",
     "mediaType": "image",
     "mediaUrl": "/journey/images/multiplayer-demo.jpg",
-    "tags": ["Photon Fusion", "Prediction", "WebSockets"]
+    "tags": ["Gamification", "Unity UI", "Traffic Rules", "Simulation", "Game Systems", "C#"]
   },
   {
     "id": "webgl-export",
     "progress": 1.0,
-    "title": "WebGL Racing Engine",
-    "description": "Successfully compiled, optimized, and deployed the racing engine to WebAssembly. Time to test drive the simulation!",
+    "title": "Road Rules Simulator",
+    "description": "Currently expanding the playable Unity WebGL prototype into a comprehensive learner-driver training simulator. Planned improvements include additional driving scenarios, new levels, AI-controlled traffic, richer environments, enhanced gameplay systems, performance optimization, and advanced learning analytics.",
     "mediaType": "unity",
-    "tags": ["WebGL", "WebAssembly", "Optimization"]
+    "tags": ["Unity", "WebGL", "Simulation", "AI Traffic", "Level Design", "Performance", "Educational Games"]
   }
 ]
