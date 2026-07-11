@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useScrollDrive } from '../hooks/useScrollDrive';
 import { useGameStore } from '../hooks/useGameStore';
@@ -28,12 +28,43 @@ export default function Home() {
   // Mount smooth scrolling physics calculations
   useScrollDrive();
 
+  const [showWelcome, setShowWelcome] = useState(true);
   const fadeActive = useGameStore((state) => state.fadeActive);
   const unityPlaying = useGameStore((state) => state.unityPlaying);
   const feedbackOpen = useGameStore((state) => state.feedbackOpen);
   const setFeedbackOpen = useGameStore((state) => state.setFeedbackOpen);
 
-  // Auto-fullscreen on mobile rotation to landscape
+  const requestFullScreen = async () => {
+    try {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        await docEl.requestFullscreen();
+      } else if ((docEl as any).webkitRequestFullscreen) {
+        await (docEl as any).webkitRequestFullscreen();
+      } else if ((docEl as any).mozRequestFullScreen) {
+        await (docEl as any).mozRequestFullScreen();
+      } else if ((docEl as any).msRequestFullscreen) {
+        await (docEl as any).msRequestFullscreen();
+      }
+    } catch (err) {
+      console.warn("Fullscreen request blocked or failed:", err);
+    }
+  };
+
+  const lockLandscape = async () => {
+    try {
+      const anyScreen = screen as any;
+      if (anyScreen.orientation && anyScreen.orientation.lock) {
+        await anyScreen.orientation.lock("landscape");
+      } else if (anyScreen.lockOrientation) {
+        await anyScreen.lockOrientation("landscape");
+      }
+    } catch (err) {
+      console.warn("Orientation lock not supported or failed:", err);
+    }
+  };
+
+  // Auto-fullscreen on mobile rotation to landscape (using gesture triggers)
   useEffect(() => {
     const handleOrientationCheck = async () => {
       if (typeof window === 'undefined') return;
@@ -42,25 +73,19 @@ export default function Home() {
 
       const isLandscape = window.innerWidth > window.innerHeight;
       if (isLandscape) {
-        // Try to trigger fullscreen automatically
-        try {
-          if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-            await document.documentElement.requestFullscreen();
-          }
-        } catch (e) {
-          // Fallback: Bind one-time gesture listeners to upgrade to fullscreen on next tap
-          const activateFullscreen = async () => {
-            try {
-              if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-                await document.documentElement.requestFullscreen();
-              }
-            } catch (err) {}
-            window.removeEventListener('touchstart', activateFullscreen);
-            window.removeEventListener('click', activateFullscreen);
-          };
-          window.addEventListener('touchstart', activateFullscreen);
-          window.addEventListener('click', activateFullscreen);
-        }
+        // Try to trigger fullscreen immediately
+        await requestFullScreen();
+        await lockLandscape();
+        
+        // Fallback: Bind one-time gesture listeners to upgrade to fullscreen on next tap/touch
+        const activateFullscreen = async () => {
+          await requestFullScreen();
+          await lockLandscape();
+          window.removeEventListener('touchstart', activateFullscreen);
+          window.removeEventListener('click', activateFullscreen);
+        };
+        window.addEventListener('touchstart', activateFullscreen, { passive: true });
+        window.addEventListener('click', activateFullscreen, { passive: true });
       }
     };
 
@@ -95,6 +120,57 @@ export default function Home() {
       {feedbackOpen && (
         <Feedback active={feedbackOpen} onSubmittedComplete={() => setFeedbackOpen(false)} />
       )}
+
+      {/* Welcome Splash Overlay Screen */}
+      <AnimatePresence>
+        {showWelcome && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: 'easeInOut' }}
+            className="absolute inset-0 z-40 bg-[#CADAE8]/80 backdrop-blur-md flex flex-col items-center justify-center p-6 text-[#023B22] pointer-events-auto"
+          >
+            <motion.h1 
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="text-5xl lg:text-8xl tracking-[0.25em] font-light text-[#023B22] uppercase text-center"
+              style={{ fontFamily: 'Georgia, serif' }}
+            >
+              VOYAGE
+            </motion.h1>
+            <motion.p 
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="text-[8px] lg:text-sm uppercase tracking-[0.3em] text-[#023B22]/70 font-mono mt-2 lg:mt-3 text-center"
+            >
+              Car Traffic Simulator
+            </motion.p>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="text-[7px] lg:text-xs uppercase tracking-widest text-[#023B22]/55 font-mono mt-4 lg:mt-6 max-w-sm text-center leading-relaxed"
+            >
+              An Interactive 3D Dev Journey & WebGL Demo
+            </motion.p>
+            <motion.button
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+              onClick={async () => {
+                await requestFullScreen();
+                await lockLandscape();
+                setShowWelcome(false);
+              }}
+              className="flex items-center justify-center w-auto px-6 py-3 lg:px-8 lg:py-4 rounded bg-[#023B22] hover:bg-[#034d2d] text-white font-bold text-[9px] lg:text-xs tracking-widest uppercase border border-[#023B22]/15 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer mt-8 lg:mt-12"
+            >
+              GET STARTED
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 4. Cinematic Warp Loop Transition Screen */}
       <AnimatePresence>

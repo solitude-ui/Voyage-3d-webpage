@@ -2,6 +2,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     --sky: #CADAE8;
     --hills: #A3C986;
     --grass: #5CA055;
